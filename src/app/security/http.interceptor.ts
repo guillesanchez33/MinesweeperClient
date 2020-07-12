@@ -36,7 +36,9 @@ export class MyHttpInterceptor implements HttpInterceptor {
           if (event.status === 200) {
             //console.log(event.body);
             const body= JSON.parse(event.body);
-            localStorage.setItem('sessionId', body.session);
+            if(body.session){
+                localStorage.setItem('sessionId', body.session);
+            }
           }
         }
         return event;

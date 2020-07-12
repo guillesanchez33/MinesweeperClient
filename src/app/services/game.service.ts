@@ -59,10 +59,10 @@ export class GameService {
       );
   }
 
-  getMewGame() {
+  getNewGame(x,y,mines) {
     let params: HttpParams = new HttpParams();
     return this._http
-      .get(this.url + this.service + "", {
+      .get(this.url + this.service + "/new/" + x + "/" + y + "/" + mines, {
         responseType: "text",
         observe: "response",
         headers: new HttpHeaders(),
@@ -74,7 +74,7 @@ export class GameService {
         })
       );
   }
-  
+
   getOpenGame(gameId:string) {
     let params: HttpParams = new HttpParams();
     return this._http
