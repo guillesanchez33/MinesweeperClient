@@ -1,0 +1,13 @@
+<div class="mat-dialog-content">
+<b>Select Game</b>
+<table>
+    <tr *ngFor="let game of listGame">
+        <td (click)="confirm(game.id)">
+            {{game.creationDate|date:"short"}}<b>-{{game.state}}</b>
+        </td>
+    </tr>
+</table>    
+</div>
+<div mat-dialog-actions> 
+    <button mat-button (click)="onNoClick()">Close</button> 
+ </div>
