@@ -25,8 +25,8 @@ export class AppComponent {
   }
 
   printCellInfo(n: Cell) {
-    if(this.game.state == 'Lose' && n.mine){
-      return "stars";
+    if((this.game.state == 'Lose' || this.game.state == 'Win') && n.mine){
+      return "brightness_7";
     }
     switch (n.info) {
       case "Empty":
@@ -103,7 +103,6 @@ export class AppComponent {
           y=30;
           mines=200;
         }
-
         console.log('calling new game');
         this._gameService.getNewGame(x,y,mines).subscribe(
           res => {
@@ -113,13 +112,6 @@ export class AppComponent {
           )
       }
      });
-   /* this._gameService.getMewGame().subscribe(
-      res => {
-        this.game = JSON.parse(res.body);
-        console.log('NEW GAME: ', this.game)
-      },
-      error => console.error('NEW GAME: ', error)
-    )*/
   }
 
   openGame() {
@@ -134,6 +126,17 @@ export class AppComponent {
           )
       }
      });
+  }
+
+  pauseGame() {
+    if(this.game != null && this.game.state == 'Playing'){
+      this._gameService.pauseGame(this.game.id).subscribe(
+        res => {
+          this.game = null;
+        },
+        error => console.error('PAUSE GAME: ', error)
+      )
+    }
   }
 
   getColor(n: Cell, i) {
@@ -167,15 +170,5 @@ export class AppComponent {
 
   setFlag() {
     this.dig = false;
-  }
-
-  getDigButtonStyle() {
-    if (this.dig) {
-      return 'accent';
-    }
-    return 'accent';
-  }
-
-  getFlagButtonStyle() {
   }
 }

@@ -374,27 +374,26 @@
   </div>
   <div>
     
-    <button mat-raised-button (click)="setDig()" color="{{(dig) ? 'primary': ''}}">
-      <span class="material-icons">
-        gavel
-       </span>
-    </button>
-    <button mat-raised-button (click)="setFlag()" color="{{(!dig) ? 'primary': ''}}">
-      <span class="material-icons">
-        flag
-        </span>
-    </button>
+  <button mat-raised-button (click)="setDig()" color="{{(dig) ? 'primary': ''}}">
+    <span class="material-icons">
+      gavel
+      </span>
+  </button>
+  <button mat-raised-button (click)="setFlag()" color="{{(!dig) ? 'primary': ''}}">
+    <span class="material-icons">
+      flag
+      </span>
+  </button>
 
-    <div></div>
-    
-    <button mat-raised-button color="accent" (click)="newGame()">Nuevo</button>
-    <button mat-raised-button color="accent" (click)="openGame()">Abrir</button>
+  <button mat-raised-button color="accent" (click)="newGame()">New</button>
+  <button mat-raised-button color="accent" (click)="openGame()">Open</button>
+  <button mat-raised-button color="accent" (click)="pauseGame()">Pause</button>
     
   </div>
 
 
   <div class="square" *ngIf="game">
-    <div  (click)="digCell(n,i)" [ngClass]="getColor(n,i)" *ngFor="let n of game.board.cells;let i=index" [ngStyle]="{'height':(100.0/game.board.sizeY)+'%','width':(100.0/game.board.sizeX)+'%'}">
+    <div (click)="digCell(n,i)" [ngClass]="getColor(n,i)" *ngFor="let n of game.board.cells;let i=index" [ngStyle]="{'height':(100.0/game.board.sizeY)+'%','width':(100.0/game.board.sizeX)+'%'}">
       <span class="material-icons">
         {{printCellInfo(n)}}
       </span>
