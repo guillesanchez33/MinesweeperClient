@@ -5,12 +5,14 @@ import { Cell } from './model/cell';
 import { MatDialog } from '@angular/material/dialog';
 import { OpenGameComponent } from './dialog/open-game/open-game.component';
 import { NewGameComponent } from './dialog/new-game/new-game.component';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
   title = 'MinesweeperFront';
   sizeX = 8;
@@ -19,7 +21,7 @@ export class AppComponent {
   game: Game;
   firstDark = true;
   dig = true;
-
+  
   constructor(private _gameService: GameService, public dialog: MatDialog) {
 
   }
@@ -54,16 +56,25 @@ export class AppComponent {
   }
 
   digCell(n: Cell, i) {
-    console.log(n.info);
     if (!n.revealed && this.game.state == "Playing") {
       if (this.dig) {
         this._gameService.digCell(this.game, i).subscribe(
           res => {
             this.game = JSON.parse(res.body);
             if (this.game.state == "Win") {
-              alert("Congratulations! YOU WIN");
+              Swal.fire({
+                title: ':-) YOU WIN',
+                text: 'Congratulations!',
+                icon: 'success',
+                confirmButtonText: 'Close'
+              })
             } else if (this.game.state == "Lose") {
-              alert("YOU LOSE :-(    Try again!! practice makes perfect");
+              Swal.fire({
+                title: 'OPSs! You find a mine :-(',
+                text: 'Try again. Practice makes perfect.',
+                icon: 'error',
+                confirmButtonText: 'Close'
+              })
             }
           },
           error => console.error('DIG CELL: ', error)
@@ -72,7 +83,6 @@ export class AppComponent {
         this._gameService.flagCell(this.game, i).subscribe(
           res => {
             this.game = JSON.parse(res.body);
-            console.log('DIG CELL: ', this.game)
           },
           error => console.error('DIG CELL: ', error)
         )
@@ -84,9 +94,7 @@ export class AppComponent {
   newGame() {
     const dialogRef = this.dialog.open(NewGameComponent, { width: '300px', data: null }); 
     dialogRef.afterClosed().subscribe(result => { 
-      console.log(result);
       if (result) { 
-        //TODO: aca el result es el tipo de juego
         var x=10;
         var y=10;
         var mines=10;
@@ -103,7 +111,6 @@ export class AppComponent {
           y=30;
           mines=200;
         }
-        console.log('calling new game');
         this._gameService.getNewGame(x,y,mines).subscribe(
           res => {
             this.game = JSON.parse(res.body);
