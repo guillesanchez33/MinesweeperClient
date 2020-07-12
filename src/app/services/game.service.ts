@@ -14,7 +14,7 @@ export class GameService {
   digCell(game, i) {
     let params: HttpParams = new HttpParams();
     return this._http
-      .get(this.url + this.service + "/" + game.id + "/" + i, {
+      .get(this.url + this.service + "/dig/" + game.id + "/" + i, {
         responseType: "text",
         observe: "response",
         headers: new HttpHeaders(),
@@ -79,6 +79,22 @@ export class GameService {
     let params: HttpParams = new HttpParams();
     return this._http
       .get(this.url + this.service + "/open/" + gameId , {
+        responseType: "text",
+        observe: "response",
+        headers: new HttpHeaders(),
+        params: params
+      })
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
+  }
+
+  pauseGame(gameId:string) {
+    let params: HttpParams = new HttpParams();
+    return this._http
+      .get(this.url + this.service + "/pause/" + gameId , {
         responseType: "text",
         observe: "response",
         headers: new HttpHeaders(),
