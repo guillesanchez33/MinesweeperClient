@@ -5,10 +5,14 @@ import { Game } from '../model/game';
 
 @Injectable()
 export class GameService {
-  public url="http://localhost:8080/";
-  public service = "game";
+  url="http://localhost:8080/";
+  service = "game";
 
   constructor(private _http: HttpClient) {
+  }
+
+  setEndpoint(urlEndPoint){
+    this.url = urlEndPoint;
   }
 
   digCell(game, i) {

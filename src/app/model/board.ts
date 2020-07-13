@@ -4,5 +4,5 @@ export class Board{
 	sizeX:number;
     sizeY:number;
     mineQty:number;
-    cells:Cell[][];
+    cells:Cell[];
 }

@@ -37,7 +37,7 @@
     <button mat-raised-button color="accent" (click)="pauseGame()">Pause</button>
     <div style="text-align:center;" >
       <div *ngIf="game && game.state=='Playing'">
-        <b>Timer: {{timeleft}}</b>
+        <b>Timer: {{timeCount}}</b>
       </div>
         <div *ngIf="game && (game.state=='Win' || game.state=='Lose')">
         <b>Timer: {{game.timeCount}}</b>

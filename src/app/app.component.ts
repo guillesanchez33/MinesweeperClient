@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OpenGameComponent } from './dialog/open-game/open-game.component';
 import { NewGameComponent } from './dialog/new-game/new-game.component';
 import Swal from 'sweetalert2'
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
   game: Game;
   firstDark = true;
   dig = true;
-  timeleft = 10;
+  timeCount = 0;
 
   constructor(private _gameService: GameService, public dialog: MatDialog) {
 
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTime();
+    this._gameService.setEndpoint(environment.endpoint);
   }
 
   printCellInfo(n: Cell) {
@@ -95,7 +97,6 @@ export class AppComponent implements OnInit {
     } 
   }
 
-
   newGame() {
     const dialogRef = this.dialog.open(NewGameComponent, { width: '300px', data: null }); 
     dialogRef.afterClosed().subscribe(result => { 
@@ -119,7 +120,7 @@ export class AppComponent implements OnInit {
         this._gameService.getNewGame(x,y,mines).subscribe(
           res => {
             this.game = JSON.parse(res.body);
-            this.timeleft = 0;
+            this.timeCount = 0;
           },
           error => console.error('NEW GAME: ', error)
           )
@@ -134,7 +135,7 @@ export class AppComponent implements OnInit {
         this._gameService.getOpenGame(result).subscribe(
           res => {
             this.game = JSON.parse(res.body);
-            this.timeleft = this.game.timeCount;
+            this.timeCount = this.game.timeCount;
           },
           error => console.error('OPEN GAME: ', error)
           )
@@ -189,8 +190,7 @@ export class AppComponent implements OnInit {
   getTime(){
     const self = this;
     const downloadTimer = setInterval(function(){
-      //self.game.timeCount++;//
-      self.timeleft++;
+      self.timeCount++;
     }, 1000);
   }
 }

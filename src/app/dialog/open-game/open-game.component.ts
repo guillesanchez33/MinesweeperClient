@@ -20,7 +20,6 @@ export class OpenGameComponent implements OnInit {
     this._gameService.getAllGames().subscribe(
       res => {
         this.listGame = JSON.parse(res.body);
-        console.log('ALL GAMES: ', this.listGame)
       },
       error => console.error('ALL GAMES: ', error)
     )
