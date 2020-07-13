@@ -22,6 +22,16 @@
   </div>
 
   <div>
+    <button mat-raised-button (click)="setDig()" color="{{(dig) ? 'primary': ''}}">
+      <span class="material-icons">
+        gavel
+        </span>
+    </button>
+    <button mat-raised-button (click)="setFlag()" color="{{(!dig) ? 'primary': ''}}">
+      <span class="material-icons">
+        flag
+        </span>
+    </button> 
     <button mat-raised-button color="accent" (click)="newGame()">New</button>
     <button mat-raised-button color="accent" (click)="openGame()">Open</button>
     <button mat-raised-button color="accent" (click)="pauseGame()">Pause</button>
@@ -44,15 +54,6 @@
   </div>
 
   <div>  
-    <button mat-raised-button (click)="setDig()" color="{{(dig) ? 'primary': ''}}">
-      <span class="material-icons">
-        gavel
-        </span>
-    </button>
-    <button mat-raised-button (click)="setFlag()" color="{{(!dig) ? 'primary': ''}}">
-      <span class="material-icons">
-        flag
-        </span>
-    </button> 
+    
     </div>
 </div>
