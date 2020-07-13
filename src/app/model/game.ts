@@ -6,4 +6,5 @@ export class Game{
     state:string;
     creationDate:string;
     board:Board;
+    timeCount:number;
 }

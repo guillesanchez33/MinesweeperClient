@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameService } from './services/game.service';
 import { Game } from './model/game';
 import { Cell } from './model/cell';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'MinesweeperFront';
   sizeX = 8;
   sizeY = 8;
@@ -21,9 +21,14 @@ export class AppComponent {
   game: Game;
   firstDark = true;
   dig = true;
-  
+  timeleft = 10;
+
   constructor(private _gameService: GameService, public dialog: MatDialog) {
 
+  }
+
+  ngOnInit(): void {
+    this.getTime();
   }
 
   printCellInfo(n: Cell) {
@@ -114,6 +119,7 @@ export class AppComponent {
         this._gameService.getNewGame(x,y,mines).subscribe(
           res => {
             this.game = JSON.parse(res.body);
+            this.timeleft = 0;
           },
           error => console.error('NEW GAME: ', error)
           )
@@ -128,6 +134,7 @@ export class AppComponent {
         this._gameService.getOpenGame(result).subscribe(
           res => {
             this.game = JSON.parse(res.body);
+            this.timeleft = this.game.timeCount;
           },
           error => console.error('OPEN GAME: ', error)
           )
@@ -177,5 +184,13 @@ export class AppComponent {
 
   setFlag() {
     this.dig = false;
+  }
+
+  getTime(){
+    const self = this;
+    const downloadTimer = setInterval(function(){
+      //self.game.timeCount++;//
+      self.timeleft++;
+    }, 1000);
   }
 }
